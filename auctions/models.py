@@ -11,7 +11,7 @@ class Listing(models.Model):
     description = models.CharField(max_length=64)
     price = models.IntegerField()
     image = models.ImageField()
-    category = models.IntegerField()
+    category = models.CharField(max_length=64)
 
 class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -23,3 +23,10 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     text = models.CharField(max_length=128)
+
+class Category(models.Model):
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    fashion = BooleanField()
+    toys = BooleanField()
+    electronics = BooleanField()
+    home = BooleanField()

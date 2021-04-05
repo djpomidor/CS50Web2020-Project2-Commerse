@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User
+from auctions.models import *
 
 
 def index(request):
