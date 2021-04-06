@@ -22,4 +22,15 @@ class Bid(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    text = models.CharField(max_length=64)
+    text = models.CharField(max_length=128)
+
+class Category(models.Model):
+    name = models.CharField(max_length=64)
+    
+
+
+
+#    fashion = BooleanField()
+#    toys = BooleanField()
+#    electronics = BooleanField()
+#    home = BooleanField()
