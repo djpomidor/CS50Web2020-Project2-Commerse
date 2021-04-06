@@ -11,7 +11,7 @@ class Listing(models.Model):
     description = models.CharField(max_length=64)
     price = models.IntegerField()
     image = models.ImageField()
-    category = models.IntegerField()
+    category = models.CharField(max_length=64)
 
 class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
