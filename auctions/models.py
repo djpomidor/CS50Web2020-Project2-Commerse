@@ -25,8 +25,12 @@ class Comment(models.Model):
     text = models.CharField(max_length=128)
 
 class Category(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    fashion = BooleanField()
-    toys = BooleanField()
-    electronics = BooleanField()
-    home = BooleanField()
+    name = models.CharField(max_length=64)
+    
+
+
+
+#    fashion = BooleanField()
+#    toys = BooleanField()
+#    electronics = BooleanField()
+#    home = BooleanField()
