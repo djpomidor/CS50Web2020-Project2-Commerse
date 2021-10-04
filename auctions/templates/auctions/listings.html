@@ -1,0 +1,76 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Listing: {{listing}}</h2>
+    <div class="">
+        <form class="" action="{% url 'add_to_watchlist' listing.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="watchlist" value="Add to Watchlist">
+        </form>
+
+    </div>
+    <div class="container-fluid p-3 my-3 border">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src={{listing.image}} alt="" width="100%">
+            </div>
+            <div class="col-sm-8 info">
+                <h3>{{listing.title}}</h3>
+                <p>{{listing.description}}</p>
+                <strong style="font-size: xx-large;">${{listing.price}}</strong><br>
+
+
+                <p>{{n}} bid(s) so far.
+                    {% for bid in bids %}
+                        {{bid.user.username}}'
+                    {%endfor%}
+                    bid is carrent bid.</p>
+
+                <form class="" action="{% url 'listings' listing.id %}" method="post">
+                  {% csrf_token %}
+                    <div class="form-grope">
+                        <input type="number" class="form-control" name="bid" value="" placeholder="Bid">
+                    </div><br>
+                        <button type="submit" class="btn btn-primary">Place Bid</button>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <input type="submit" name="" value="Close listing">
+    </div><br>
+    <div class="col-sm-8">
+        <h4>Details</h4>
+        <ul>
+            <li>Listed by: {{listing.user.username}}</li>
+            <li>Category: {{listing.category}}</li>
+        </ul>
+        <p class="info">Created {{listing.created}}</p>
+    </div>
+
+    <div class="col-sm-8">
+        <h4>Comments</h4>
+        {% for comment in comments %}
+            <div class="col-sm-10 border p-3 mb-3">
+                <strong>{{comment.user.username}}:</strong> {{comment.text}}
+            </div>
+        {%endfor%}
+        <form class="" action="{% url 'comments' listing.id %}" method="post">
+            {% csrf_token %}
+        <div class="form-group">
+            <textarea name="comment" rows="8" cols="80"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add comment</button>
+        </form>
+    </div>
+
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+
+{% endblock %}

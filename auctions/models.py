@@ -1,9 +1,20 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import datetime
 
 
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return f"{self.username}"
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=64)
+    def __str__(self):
+        return f"{self.name}"
+    def __int__(self):
+        return self.id
+
 
 class Listing(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -11,26 +22,29 @@ class Listing(models.Model):
     description = models.CharField(max_length=64)
     price = models.IntegerField()
     image = models.ImageField()
-    category = models.CharField(max_length=64)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True, blank=True)
+    active = models.BooleanField()
+    def __str__(self):
+        return f"{self.title}"
+
 
 class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     user_price = models.IntegerField()
-
+    def __int__(self):
+        return self.listing
+    def __str__(self):
+            return f"{self.user.username}"
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     text = models.CharField(max_length=128)
 
-class Category(models.Model):
-    name = models.CharField(max_length=64)
-    
-
-
-
-#    fashion = BooleanField()
-#    toys = BooleanField()
-#    electronics = BooleanField()
-#    home = BooleanField()
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    listings_id = models.CharField(max_length=64)
+    def __str__(self):
+        return f"{self.listings_id}"
